@@ -1,0 +1,51 @@
+<html>
+<head>
+<script src="http://code.jquery.com/jquery-3.2.1.min.js"></script>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+<script>
+function traduzir() {
+	$("#resposta").empty();
+	$("#resposta").append("Aguarde...");
+
+	
+	$.post( "/inicial", { texto: $("#consultar").val() })
+ 	 .done(function( data ) {
+ 	 	$("#resposta").empty();
+   		data.entities.forEach(function(elemento){
+
+   			$("#resposta").append("<strong>" + elemento.type  + ":  " + "</strong>" + elemento.text);
+   			$("#resposta").append("<br>");
+   		});
+  	});
+    
+}
+
+function limpar(){
+
+	$("#consultar").val("");
+	$("#resposta").empty();
+}
+</script>
+</head>
+<a href="index.html"> <- Voltar</a>
+<br>
+<img src="logo_maind.png" style="max-width: 150px"/>
+<br>
+<h4>Teste com novas Iniciais</h4>
+<br>
+<div class="col-md-6">
+	<label>Inicial:</label>
+	<br>
+	<form id="formulario">
+	<textarea id="consultar" class="form-control" rows="20"></textarea>
+	</form>
+	<br>
+	<button class="btn btn-primary" onclick="traduzir()">Identificar</button>
+	<button class="btn btn-warning" onclick="limpar()">Limpar</button>
+</div>
+	<label>Entidades:</label>
+	<div class="col-md-6">
+	<div id="resposta">
+	</div>
+</div>
+</html>
